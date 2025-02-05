@@ -1,5 +1,5 @@
 import { Button, Tooltip, TooltipProps, theme } from 'antd'
-import { ReactNode } from 'react'
+import { CSSProperties, ReactNode } from 'react'
 
 export default function TooltipButton({
   title,
@@ -10,6 +10,7 @@ export default function TooltipButton({
   active,
   tip,
   loading,
+  style,
 }: {
   title: string
   shortcut?: string
@@ -19,6 +20,7 @@ export default function TooltipButton({
   active?: boolean
   tip?: TooltipProps
   loading?: boolean
+  style?: CSSProperties
 }) {
   const {
     token: { colorBgTextActive },
@@ -41,7 +43,7 @@ export default function TooltipButton({
         onClick={onClick}
         icon={icon}
         disabled={disabled}
-        style={{ background: active ? colorBgTextActive : '' }}
+        style={{ background: active ? 'rgba(0,0,0,0.08)' : '', ...style }}
       />
     </Tooltip>
   )

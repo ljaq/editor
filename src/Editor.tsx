@@ -1,6 +1,8 @@
 import { Color } from '@tiptap/extension-color'
+import Highlight from '@tiptap/extension-highlight'
 import ListItem from '@tiptap/extension-list-item'
 import TextStyle from '@tiptap/extension-text-style'
+import TextAlign from '@tiptap/extension-text-align'
 import { EditorProvider } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 
@@ -20,6 +22,8 @@ const extensions = [
       keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
     },
   }),
+  TextAlign.configure({ types: ['heading', 'paragraph'] }),
+  Highlight.configure({ multicolor: true }),
 ]
 
 const content = `
@@ -31,7 +35,7 @@ const content = `
 </p>
 <ul>
   <li>
-    That’s a bullet list with one …
+    <span style="color: #000fff">That’s a bullet list with one …</span>
   </li>
   <li>
     … or two list items.

@@ -1,24 +1,32 @@
 import {
+  AlignCenterOutlined,
+  AlignLeftOutlined,
+  AlignRightOutlined,
   BoldOutlined,
   CaretDownOutlined,
-  HeartOutlined,
   ItalicOutlined,
-  RedoOutlined,
   StrikethroughOutlined,
-  UnderlineOutlined,
-  UndoOutlined,
 } from '@ant-design/icons'
 import { useCurrentEditor } from '@tiptap/react'
-import { Button, Divider, Dropdown, MentionProps, MenuItemProps, MenuProps, Space, Tooltip } from 'antd'
-import { useEffect, useMemo, useState } from 'react'
+import { Button, ColorPicker, Divider, Dropdown, MenuProps, Space } from 'antd'
+import { useEffect, useRef, useState } from 'react'
 import { HeadingLevel } from '../types'
 import { getOptionsFromEnum } from '../utils'
 import IconFont from '../utils/icon'
 import TooltipButton from './TooltipButton'
+import { useStyles } from '../style'
+import { colorList } from '../config'
+import FontColorIcon from './FontColorIcon'
+import moreColorIcon from '../assets/more-color.png'
+import BgColorIcon from './BgColorIcon'
 
 export default function MenuBar() {
+  const { styles } = useStyles()
   const { editor } = useCurrentEditor()
   const [currentHeading, setCurrentHeading] = useState(HeadingLevel.正文)
+  const [lastCustomColor, setLastCustomColor] = useState<string>('#df2a3f')
+  const [lastCustomBg, setLastCustomBg] = useState<string>('#FBDE28')
+  const rrr = useRef<any>(null)
 
   if (!editor) {
     return null
@@ -47,6 +55,8 @@ export default function MenuBar() {
   })
 
   useEffect(() => {
+    console.log(rrr.current)
+
     editor.on('selectionUpdate', e => {
       if (editor.isActive('paragraph')) {
         return setCurrentHeading(HeadingLevel.正文)
@@ -73,7 +83,7 @@ export default function MenuBar() {
   }, [])
 
   return (
-    <div>
+    <div className={styles.menuBar}>
       <Space size={2}>
         <TooltipButton
           title='撤销'
@@ -89,8 +99,11 @@ export default function MenuBar() {
           onClick={editor.chain().focus().redo().run}
           disabled={!editor.can().chain().focus().redo().run()}
         />
-        <Divider type='vertical' />
-        <Dropdown menu={{ items: headingMenu, activeKey: String(currentHeading) }}>
+        <Divider type='vertical' style={{ margin: 2 }} />
+        <Dropdown
+          trigger={['click']}
+          menu={{ selectable: true, items: headingMenu, selectedKeys: [String(currentHeading)] }}
+        >
           <Button type='text' iconPosition='end' icon={<CaretDownOutlined />}>
             {HeadingLevel[currentHeading]}
           </Button>
@@ -135,6 +148,168 @@ export default function MenuBar() {
           onClick={editor.chain().focus().toggleCode().run}
           disabled={!editor.can().chain().focus().toggleCode().run()}
         />
+        <Divider type='vertical' style={{ margin: 2 }} />
+        <Space.Compact>
+          <TooltipButton
+            title='字体颜色'
+            icon={<FontColorIcon currentColor={lastCustomColor} />}
+            onClick={editor.chain().focus().setColor(lastCustomColor).run}
+          />
+
+          <Dropdown
+            ref={rrr}
+            trigger={['click']}
+            menu={{ items: [] }}
+            getPopupContainer={e => e.parentElement!}
+            dropdownRender={() => (
+              <div className='ant-dropdown-menu'>
+                <div className='ant-dropdown-menu-item'>
+                  <Space>
+                    <div className='color-preview default' />
+                    <span>默认</span>
+                  </Space>
+                </div>
+                <Divider style={{ margin: '4px 0' }} />
+                <div className='color-preview-menu'>
+                  {colorList.map((item, index) => (
+                    <Space key={index} className='color-preview-row'>
+                      {item.map((color, index) => (
+                        <div
+                          className={`color-preview clickable ${
+                            editor.isActive('textStyle', { color }) ? 'active' : ''
+                          }`}
+                          style={{ backgroundColor: color }}
+                          key={color}
+                          onClick={() => {
+                            editor.chain().focus().setColor(color).run()
+                            setLastCustomColor(color)
+                          }}
+                        />
+                      ))}
+                    </Space>
+                  ))}
+                </div>
+                <Divider style={{ margin: '4px 0' }} />
+                <ColorPicker
+                  value={editor.getAttributes('textStyle').color || '#000000'}
+                  onChange={value => {
+                    const color = value.toHexString()
+                    editor.chain().focus().setColor(color).run()
+                    setLastCustomColor(color)
+                  }}
+                  disabledAlpha
+                  disabledFormat
+                  placement='rightTop'
+                  getPopupContainer={el => el.parentNode as HTMLElement}
+                >
+                  <div className='ant-dropdown-menu-item'>
+                    <Space>
+                      <img src={moreColorIcon} className='more-color-icon' />
+                      更多颜色
+                    </Space>
+                  </div>
+                </ColorPicker>
+              </div>
+            )}
+          >
+            <TooltipButton title='字体颜色' icon={<CaretDownOutlined />} style={{ width: 12 }} />
+          </Dropdown>
+        </Space.Compact>
+        <Space.Compact>
+          <TooltipButton
+            title='背景颜色'
+            icon={<BgColorIcon currentColor={lastCustomBg} />}
+            onClick={editor.chain().focus().setHighlight({ color: lastCustomBg }).run}
+          />
+
+          <Dropdown
+            trigger={['click']}
+            menu={{ items: [] }}
+            getPopupContainer={e => e.parentElement!}
+            dropdownRender={() => (
+              <div className='ant-dropdown-menu'>
+                <div className='ant-dropdown-menu-item'>
+                  <Space>
+                    <div className='color-preview default' />
+                    <span>无填充色</span>
+                  </Space>
+                </div>
+                <Divider style={{ margin: '4px 0' }} />
+                <div className='color-preview-menu'>
+                  {colorList.map((item, index) => (
+                    <Space key={index} className='color-preview-row'>
+                      {item.map((color, index) => (
+                        <div
+                          className={`color-preview clickable ${
+                            editor.isActive('textStyle', { color }) ? 'active' : ''
+                          }`}
+                          style={{ backgroundColor: color }}
+                          key={color}
+                          onClick={() => {
+                            editor.chain().focus().setHighlight({ color }).run()
+                            setLastCustomBg(color)
+                          }}
+                        />
+                      ))}
+                    </Space>
+                  ))}
+                </div>
+                <Divider style={{ margin: '4px 0' }} />
+                <ColorPicker
+                  value={editor.getAttributes('textStyle').color || '#000000'}
+                  onChange={value => {
+                    const color = value.toHexString()
+                    editor.chain().focus().setHighlight({ color }).run()
+                    setLastCustomColor(color)
+                  }}
+                  disabledAlpha
+                  disabledFormat
+                  placement='rightTop'
+                  getPopupContainer={el => el.parentNode as HTMLElement}
+                >
+                  <div className='ant-dropdown-menu-item'>
+                    <Space>
+                      <img src={moreColorIcon} className='more-color-icon' />
+                      更多颜色
+                    </Space>
+                  </div>
+                </ColorPicker>
+              </div>
+            )}
+          >
+            <TooltipButton title='背景颜色' icon={<CaretDownOutlined />} style={{ width: 12 }} />
+          </Dropdown>
+        </Space.Compact>
+        <Divider type='vertical' style={{ margin: 2 }} />
+        <Dropdown
+          trigger={['click']}
+          dropdownRender={() => (
+            <div className='ant-dropdown-menu'>
+              <Space>
+                <TooltipButton
+                  title='左对齐'
+                  icon={<AlignLeftOutlined />}
+                  onClick={editor.chain().focus().setTextAlign('left').run}
+                />
+                <TooltipButton
+                  title='居中对齐'
+                  icon={<AlignCenterOutlined />}
+                  onClick={editor.chain().focus().setTextAlign('left').run}
+                />
+                <TooltipButton
+                  title='右对齐'
+                  icon={<AlignRightOutlined />}
+                  onClick={editor.chain().focus().setTextAlign('left').run}
+                />
+              </Space>
+            </div>
+          )}
+        >
+          <Button type='text' iconPosition='end' autoInsertSpace={false}>
+            <CaretDownOutlined />
+            <AlignLeftOutlined />
+          </Button>
+        </Dropdown>
       </Space>
     </div>
   )

@@ -13,7 +13,7 @@ export const useStyles = createStyles(({ token, css }) => {
         border-color: ${token.colorPrimaryBorderHover};
       }
       &:has(.ProseMirror-focused) {
-        border-color: ${token.colorPrimary};
+        border-color: ${token.colorPrimaryActive};
         box-shadow: 0 0 0 2px ${token.colorPrimaryBg};
       }
     `,

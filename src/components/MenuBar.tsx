@@ -90,14 +90,14 @@ export default function MenuBar() {
           title='撤销'
           shortcut='⌘ Z'
           icon={<IconFont type='icon-undo' />}
-          onClick={editor.chain().focus().undo().run}
+          onClick={() => editor.chain().focus().undo().run()}
           disabled={!editor.can().chain().focus().undo().run()}
         />
         <TooltipButton
           title='重做'
           shortcut='⌘ Y'
           icon={<IconFont type='icon-redo' />}
-          onClick={editor.chain().focus().redo().run}
+          onClick={() => editor.chain().focus().redo().run()}
           disabled={!editor.can().chain().focus().redo().run()}
         />
         <Divider type='vertical' style={{ margin: 2 }} />
@@ -120,7 +120,7 @@ export default function MenuBar() {
           shortcut='⌘ B'
           icon={<BoldOutlined />}
           active={editor.isActive('bold')}
-          onClick={editor.chain().focus().toggleBold().run}
+          onClick={() => editor.chain().focus().toggleBold().run()}
           disabled={!editor.can().chain().focus().toggleBold().run()}
         />
         <TooltipButton
@@ -128,7 +128,7 @@ export default function MenuBar() {
           shortcut='⌘ I'
           icon={<ItalicOutlined />}
           active={editor.isActive('italic')}
-          onClick={editor.chain().focus().toggleItalic().run}
+          onClick={() => editor.chain().focus().toggleItalic().run()}
           disabled={!editor.can().chain().focus().toggleItalic().run()}
         />
         <TooltipButton
@@ -136,7 +136,7 @@ export default function MenuBar() {
           shortcut='⌘ U'
           icon={<UnderlineOutlined />}
           active={editor.isActive('underline')}
-          onClick={editor.chain().focus().toggleUnderline().run}
+          onClick={() => editor.chain().focus().toggleUnderline().run()}
           disabled={!editor.can().chain().focus().toggleUnderline().run()}
         />
         <TooltipButton
@@ -144,7 +144,7 @@ export default function MenuBar() {
           shortcut='⌘ D'
           icon={<StrikethroughOutlined />}
           active={editor.isActive('strike')}
-          onClick={editor.chain().focus().toggleStrike().run}
+          onClick={() => editor.chain().focus().toggleStrike().run()}
           disabled={!editor.can().chain().focus().toggleStrike().run()}
         />
         <TooltipButton
@@ -152,7 +152,7 @@ export default function MenuBar() {
           shortcut='⌘ E'
           icon={<IconFont type='icon-inlinecode' />}
           active={editor.isActive('code')}
-          onClick={editor.chain().focus().toggleCode().run}
+          onClick={() => editor.chain().focus().toggleCode().run()}
           disabled={!editor.can().chain().focus().toggleCode().run()}
         />
         <Divider type='vertical' style={{ margin: 2 }} />
@@ -160,7 +160,7 @@ export default function MenuBar() {
           <TooltipButton
             title='字体颜色'
             icon={<FontColorIcon currentColor={lastCustomColor} />}
-            onClick={editor.chain().focus().setColor(lastCustomColor).run}
+            onClick={() => editor.chain().focus().setColor(lastCustomColor).run()}
           />
 
           <Dropdown
@@ -224,7 +224,7 @@ export default function MenuBar() {
           <TooltipButton
             title='背景颜色'
             icon={<BgColorIcon currentColor={lastCustomBg} />}
-            onClick={editor.chain().focus().setHighlight({ color: lastCustomBg }).run}
+            onClick={() => editor.chain().focus().setHighlight({ color: lastCustomBg }).run()}
           />
 
           <Dropdown
@@ -294,19 +294,19 @@ export default function MenuBar() {
                   title='左对齐'
                   icon={<AlignLeftOutlined />}
                   active={editor.isActive({ textAlign: 'left' })}
-                  onClick={editor.chain().focus().setTextAlign('left').run}
+                  onClick={() => editor.chain().focus().setTextAlign('left').run()}
                 />
                 <TooltipButton
                   title='居中对齐'
                   icon={<AlignCenterOutlined />}
                   active={editor.isActive({ textAlign: 'center' })}
-                  onClick={editor.chain().focus().setTextAlign('center').run}
+                  onClick={() => editor.chain().focus().setTextAlign('center').run()}
                 />
                 <TooltipButton
                   title='右对齐'
                   icon={<AlignRightOutlined />}
                   active={editor.isActive({ textAlign: 'right' })}
-                  onClick={editor.chain().focus().setTextAlign('right').run}
+                  onClick={() => editor.chain().focus().setTextAlign('right').run()}
                 />
               </Space>
             </div>
@@ -330,7 +330,7 @@ export default function MenuBar() {
           shortcut='⌘ ⇧ 7'
           icon={<UnorderedListOutlined />}
           active={editor.isActive('bulletList')}
-          onClick={editor.chain().focus().toggleBulletList().run}
+          onClick={() => editor.chain().focus().toggleBulletList().run()}
           disabled={!editor.can().chain().focus().toggleBulletList().run()}
         />
         <TooltipButton
@@ -338,7 +338,7 @@ export default function MenuBar() {
           shortcut='⇧ ⌘ 8'
           icon={<OrderedListOutlined />}
           active={editor.isActive('orderedList')}
-          onClick={editor.chain().focus().toggleOrderedList().run}
+          onClick={() => editor.chain().focus().toggleOrderedList().run()}
           disabled={!editor.can().chain().focus().toggleOrderedList().run()}
         />
         <Divider type='vertical' style={{ margin: 2 }} />
@@ -347,14 +347,14 @@ export default function MenuBar() {
           shortcut='⇧ ⌘ U'
           icon={<IconFont type='icon-quote' />}
           active={editor.isActive('blockquote')}
-          onClick={editor.chain().focus().toggleBlockquote().run}
+          onClick={() => editor.chain().focus().toggleBlockquote().run()}
           disabled={!editor.can().chain().focus().toggleBlockquote().run()}
         />
         <TooltipButton
           title='插入分隔线'
           shortcut='⇧ ⌘ U'
           icon={<LineOutlined />}
-          onClick={editor.chain().focus().setHorizontalRule().run}
+          onClick={() => editor.chain().focus().setHorizontalRule().run()}
         />
       </Space>
     </div>

@@ -5,11 +5,15 @@ import {
   BoldOutlined,
   CaretDownOutlined,
   ItalicOutlined,
+  LineOutlined,
+  OrderedListOutlined,
   StrikethroughOutlined,
+  UnderlineOutlined,
+  UnorderedListOutlined,
 } from '@ant-design/icons'
 import { useCurrentEditor } from '@tiptap/react'
 import { Button, ColorPicker, Divider, Dropdown, MenuProps, Space } from 'antd'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { HeadingLevel } from '../types'
 import { getOptionsFromEnum } from '../utils'
 import IconFont from '../utils/icon'
@@ -26,7 +30,6 @@ export default function MenuBar() {
   const [currentHeading, setCurrentHeading] = useState(HeadingLevel.正文)
   const [lastCustomColor, setLastCustomColor] = useState<string>('#df2a3f')
   const [lastCustomBg, setLastCustomBg] = useState<string>('#FBDE28')
-  const rrr = useRef<any>(null)
 
   if (!editor) {
     return null
@@ -55,36 +58,34 @@ export default function MenuBar() {
   })
 
   useEffect(() => {
-    console.log(rrr.current)
-
     editor.on('selectionUpdate', e => {
       if (editor.isActive('paragraph')) {
         return setCurrentHeading(HeadingLevel.正文)
       }
       if (editor.isActive('heading', { level: 1 })) {
-        return setCurrentHeading(HeadingLevel.一级标题)
+        return setCurrentHeading(HeadingLevel.标题1)
       }
       if (editor.isActive('heading', { level: 2 })) {
-        return setCurrentHeading(HeadingLevel.二级标题)
+        return setCurrentHeading(HeadingLevel.标题2)
       }
       if (editor.isActive('heading', { level: 3 })) {
-        return setCurrentHeading(HeadingLevel.三级标题)
+        return setCurrentHeading(HeadingLevel.标题3)
       }
       if (editor.isActive('heading', { level: 4 })) {
-        return setCurrentHeading(HeadingLevel.四级标题)
+        return setCurrentHeading(HeadingLevel.标题4)
       }
       if (editor.isActive('heading', { level: 5 })) {
-        return setCurrentHeading(HeadingLevel.五级标题)
+        return setCurrentHeading(HeadingLevel.标题5)
       }
       if (editor.isActive('heading', { level: 6 })) {
-        return setCurrentHeading(HeadingLevel.六级标题)
+        return setCurrentHeading(HeadingLevel.标题6)
       }
     })
   }, [])
 
   return (
     <div className={styles.menuBar}>
-      <Space size={2}>
+      <Space>
         <TooltipButton
           title='撤销'
           shortcut='⌘ Z'
@@ -104,7 +105,13 @@ export default function MenuBar() {
           trigger={['click']}
           menu={{ selectable: true, items: headingMenu, selectedKeys: [String(currentHeading)] }}
         >
-          <Button type='text' iconPosition='end' icon={<CaretDownOutlined />}>
+          <Button
+            type='text'
+            iconPosition='end'
+            icon={<CaretDownOutlined />}
+            size='small'
+            style={{ width: 70, justifyContent: 'start' }}
+          >
             {HeadingLevel[currentHeading]}
           </Button>
         </Dropdown>
@@ -124,14 +131,14 @@ export default function MenuBar() {
           onClick={editor.chain().focus().toggleItalic().run}
           disabled={!editor.can().chain().focus().toggleItalic().run()}
         />
-        {/* <TooltipButton
+        <TooltipButton
           title='下划线'
           shortcut='⌘ U'
           icon={<UnderlineOutlined />}
           active={editor.isActive('underline')}
-          onClick={editor.chain().focus().under().run}
+          onClick={editor.chain().focus().toggleUnderline().run}
           disabled={!editor.can().chain().focus().toggleUnderline().run()}
-        /> */}
+        />
         <TooltipButton
           title='删除线'
           shortcut='⌘ D'
@@ -157,9 +164,7 @@ export default function MenuBar() {
           />
 
           <Dropdown
-            ref={rrr}
             trigger={['click']}
-            menu={{ items: [] }}
             getPopupContainer={e => e.parentElement!}
             dropdownRender={() => (
               <div className='ant-dropdown-menu'>
@@ -224,7 +229,6 @@ export default function MenuBar() {
 
           <Dropdown
             trigger={['click']}
-            menu={{ items: [] }}
             getPopupContainer={e => e.parentElement!}
             dropdownRender={() => (
               <div className='ant-dropdown-menu'>
@@ -289,69 +293,70 @@ export default function MenuBar() {
                 <TooltipButton
                   title='左对齐'
                   icon={<AlignLeftOutlined />}
+                  active={editor.isActive({ textAlign: 'left' })}
                   onClick={editor.chain().focus().setTextAlign('left').run}
                 />
                 <TooltipButton
                   title='居中对齐'
                   icon={<AlignCenterOutlined />}
-                  onClick={editor.chain().focus().setTextAlign('left').run}
+                  active={editor.isActive({ textAlign: 'center' })}
+                  onClick={editor.chain().focus().setTextAlign('center').run}
                 />
                 <TooltipButton
                   title='右对齐'
                   icon={<AlignRightOutlined />}
-                  onClick={editor.chain().focus().setTextAlign('left').run}
+                  active={editor.isActive({ textAlign: 'right' })}
+                  onClick={editor.chain().focus().setTextAlign('right').run}
                 />
               </Space>
             </div>
           )}
         >
-          <Button type='text' iconPosition='end' autoInsertSpace={false}>
-            <CaretDownOutlined />
-            <AlignLeftOutlined />
+          <Button type='text' size='small' autoInsertSpace={false}>
+            <div>
+              {editor.isActive({ textAlign: 'center' }) ? (
+                <AlignCenterOutlined />
+              ) : editor.isActive({ textAlign: 'right' }) ? (
+                <AlignRightOutlined />
+              ) : (
+                <AlignLeftOutlined />
+              )}
+              <CaretDownOutlined />
+            </div>
           </Button>
         </Dropdown>
+        <TooltipButton
+          title='无序列表'
+          shortcut='⌘ ⇧ 7'
+          icon={<UnorderedListOutlined />}
+          active={editor.isActive('bulletList')}
+          onClick={editor.chain().focus().toggleBulletList().run}
+          disabled={!editor.can().chain().focus().toggleBulletList().run()}
+        />
+        <TooltipButton
+          title='有序列表'
+          shortcut='⇧ ⌘ 8'
+          icon={<OrderedListOutlined />}
+          active={editor.isActive('orderedList')}
+          onClick={editor.chain().focus().toggleOrderedList().run}
+          disabled={!editor.can().chain().focus().toggleOrderedList().run()}
+        />
+        <Divider type='vertical' style={{ margin: 2 }} />
+        <TooltipButton
+          title='插入引用'
+          shortcut='⇧ ⌘ U'
+          icon={<IconFont type='icon-quote' />}
+          active={editor.isActive('blockquote')}
+          onClick={editor.chain().focus().toggleBlockquote().run}
+          disabled={!editor.can().chain().focus().toggleBlockquote().run()}
+        />
+        <TooltipButton
+          title='插入分隔线'
+          shortcut='⇧ ⌘ U'
+          icon={<LineOutlined />}
+          onClick={editor.chain().focus().setHorizontalRule().run}
+        />
       </Space>
-    </div>
-  )
-
-  return (
-    <div className='control-group'>
-      <div className='button-group'>
-        <button onClick={() => editor.chain().focus().unsetAllMarks().run()}>Clear marks</button>
-        <button onClick={() => editor.chain().focus().clearNodes().run()}>Clear nodes</button>
-        <button
-          onClick={() => editor.chain().focus().toggleBulletList().run()}
-          className={editor.isActive('bulletList') ? 'is-active' : ''}
-        >
-          Bullet list
-        </button>
-        <button
-          onClick={() => editor.chain().focus().toggleOrderedList().run()}
-          className={editor.isActive('orderedList') ? 'is-active' : ''}
-        >
-          Ordered list
-        </button>
-        <button
-          onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-          className={editor.isActive('codeBlock') ? 'is-active' : ''}
-        >
-          Code block
-        </button>
-        <button
-          onClick={() => editor.chain().focus().toggleBlockquote().run()}
-          className={editor.isActive('blockquote') ? 'is-active' : ''}
-        >
-          Blockquote
-        </button>
-        <button onClick={() => editor.chain().focus().setHorizontalRule().run()}>Horizontal rule</button>
-        <button onClick={() => editor.chain().focus().setHardBreak().run()}>Hard break</button>
-        <button
-          onClick={() => editor.chain().focus().setColor('#958DF1').run()}
-          className={editor.isActive('textStyle', { color: '#958DF1' }) ? 'is-active' : ''}
-        >
-          Purple
-        </button>
-      </div>
     </div>
   )
 }

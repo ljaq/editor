@@ -3,11 +3,13 @@ import Highlight from '@tiptap/extension-highlight'
 import ListItem from '@tiptap/extension-list-item'
 import TextStyle from '@tiptap/extension-text-style'
 import TextAlign from '@tiptap/extension-text-align'
+import Underline from '@tiptap/extension-underline'
 import { EditorProvider } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 
 import './basic.less'
 import MenuBar from './components/MenuBar'
+import { useStyles } from './style'
 
 const extensions = [
   Color.configure({ types: [TextStyle.name, ListItem.name] }),
@@ -24,6 +26,7 @@ const extensions = [
   }),
   TextAlign.configure({ types: ['heading', 'paragraph'] }),
   Highlight.configure({ multicolor: true }),
+  Underline,
 ]
 
 const content = `
@@ -58,5 +61,16 @@ const content = `
 `
 
 export default () => {
-  return <EditorProvider slotBefore={<MenuBar />} extensions={extensions} content={content}></EditorProvider>
+  const { styles } = useStyles()
+  return (
+    <div className={styles.editor}>
+      <EditorProvider
+        slotBefore={<MenuBar />}
+        autofocus={false}
+        extensions={extensions}
+        content={content}
+        editorContainerProps={{ className: styles.editorContent }}
+      ></EditorProvider>
+    </div>
+  )
 }

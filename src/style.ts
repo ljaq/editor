@@ -2,7 +2,29 @@ import { createStyles } from 'antd-style'
 
 export const useStyles = createStyles(({ token, css }) => {
   return {
+    editor: css`
+      position: relative;
+      border: 1px solid #d9d9d9;
+      border-radius: ${token.borderRadius}px;
+      overflow: auto;
+      height: 400px;
+      transition: 0.2s;
+      &:hover {
+        border-color: ${token.colorPrimaryBorderHover};
+      }
+      &:has(.ProseMirror-focused) {
+        border-color: ${token.colorPrimary};
+        box-shadow: 0 0 0 2px ${token.colorPrimaryBg};
+      }
+    `,
     menuBar: css`
+      position: sticky;
+      top: 0;
+      padding: 8px;
+      border-bottom: 1px solid ${token.colorBorderSecondary};
+      background-color: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px);
+      z-index: 10;
       .anticon-caret-down {
         transform: scale(0.6);
         color: ${token.colorTextTertiary};
@@ -60,6 +82,9 @@ export const useStyles = createStyles(({ token, css }) => {
         box-shadow: none;
         padding: 5px 12px !important;
       }
+    `,
+    editorContent: css`
+      padding: 8px;
     `,
   }
 })

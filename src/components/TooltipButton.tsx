@@ -1,4 +1,4 @@
-import { Button, Tooltip, TooltipProps, theme } from 'antd'
+import { Button, Tooltip, TooltipProps } from 'antd'
 import { CSSProperties, ReactNode } from 'react'
 
 export default function TooltipButton({
@@ -22,9 +22,6 @@ export default function TooltipButton({
   loading?: boolean
   style?: CSSProperties
 }) {
-  const {
-    token: { colorBgTextActive },
-  } = theme.useToken()
   return (
     <Tooltip
       title={
@@ -36,9 +33,11 @@ export default function TooltipButton({
       placement='bottom'
       {...tip}
       open={disabled ? false : undefined}
+      getPopupContainer={el => el.parentElement!}
     >
       <Button
         type='text'
+        size='small'
         loading={loading}
         onClick={onClick}
         icon={icon}

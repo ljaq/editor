@@ -1,17 +1,20 @@
+import { Form } from 'antd'
 import { Color } from '@tiptap/extension-color'
 import Highlight from '@tiptap/extension-highlight'
 import ListItem from '@tiptap/extension-list-item'
 import TextStyle from '@tiptap/extension-text-style'
 import TextAlign from '@tiptap/extension-text-align'
 import Underline from '@tiptap/extension-underline'
-import { Editor, EditorProvider } from '@tiptap/react'
+import TaskItem from '@tiptap/extension-task-item'
+import TaskList from '@tiptap/extension-task-list'
+import { Editor, EditorProvider, ReactNodeViewRenderer } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-
-import './basic.less'
 import MenuBar from './components/MenuBar'
 import { useStyles } from './style'
-import { useEffect, useMemo, useRef } from 'react'
-import { Form } from 'antd'
+import { useEffect, useRef } from 'react'
+import CustomTaskItem from './components/CustomNodes/CustomTaskItem'
+
+import './basic.less'
 
 const extensions = [
   Color.configure({ types: [TextStyle.name, ListItem.name] }),
@@ -28,6 +31,12 @@ const extensions = [
   }),
   TextAlign.configure({ types: ['heading', 'paragraph'] }),
   Highlight.configure({ multicolor: true }),
+  TaskList,
+  TaskItem.extend({
+    addNodeView() {
+      return ReactNodeViewRenderer(CustomTaskItem)
+    },
+  }).configure({ nested: true }),
   Underline,
 ]
 

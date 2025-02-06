@@ -37,7 +37,7 @@ export default function App() {
   const [form] = Form.useForm()
 
   const handleSubmit = (values: any) => {
-    console.log(values)
+    console.log(values.editor)
   }
 
   useEffect(() => {

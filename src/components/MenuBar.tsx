@@ -341,6 +341,14 @@ export default function MenuBar() {
           onClick={() => editor.chain().focus().toggleOrderedList().run()}
           disabled={!editor.can().chain().focus().toggleOrderedList().run()}
         />
+        <TooltipButton
+          title='任务列表'
+          shortcut='⇧ ⌘ 8'
+          icon={<IconFont type='icon-checklist' />}
+          active={editor.isActive('taskList')}
+          onClick={() => editor.chain().focus().toggleTaskList().run()}
+          disabled={!editor.can().chain().focus().toggleTaskList().run()}
+        />
         <Divider type='vertical' style={{ margin: 2 }} />
         <TooltipButton
           title='插入引用'

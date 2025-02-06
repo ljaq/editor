@@ -3,10 +3,12 @@ import {
   AlignLeftOutlined,
   AlignRightOutlined,
   BoldOutlined,
+  CameraOutlined,
   CaretDownOutlined,
   ItalicOutlined,
   LineOutlined,
   OrderedListOutlined,
+  PictureOutlined,
   StrikethroughOutlined,
   UnderlineOutlined,
   UnorderedListOutlined,
@@ -284,6 +286,15 @@ export default function MenuBar() {
             <TooltipButton title='背景颜色' icon={<CaretDownOutlined />} style={{ width: 12 }} />
           </Dropdown>
         </Space.Compact>
+        <TooltipButton
+          title='插入图片'
+          shortcut='⌘ E'
+          icon={<PictureOutlined />}
+          onClick={() =>
+            editor.chain().focus().setImage({ src: 'https://cn.bing.com/rp/kAwiv9gc4HPfHSU3xUQp2Xqm5wA.png' }).run()
+          }
+          disabled={!editor.can().chain().focus().toggleCode().run()}
+        />
         <Divider type='vertical' style={{ margin: 2 }} />
         <Dropdown
           trigger={['click']}

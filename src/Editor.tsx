@@ -1,5 +1,7 @@
-import { Form } from 'antd'
+import { ConfigProvider, Form } from 'antd'
+import zh_CN from 'antd/locale/zh_CN'
 import { Color } from '@tiptap/extension-color'
+import Image from '@tiptap/extension-image'
 import Highlight from '@tiptap/extension-highlight'
 import ListItem from '@tiptap/extension-list-item'
 import TextStyle from '@tiptap/extension-text-style'
@@ -15,6 +17,7 @@ import { useEffect, useRef } from 'react'
 import CustomTaskItem from './components/CustomNodes/CustomTaskItem'
 
 import './basic.less'
+import CustomImage from './components/CustomNodes/CustomImage'
 
 const extensions = [
   Color.configure({ types: [TextStyle.name, ListItem.name] }),
@@ -37,6 +40,27 @@ const extensions = [
       return ReactNodeViewRenderer(CustomTaskItem)
     },
   }).configure({ nested: true }),
+  Image.extend({
+    addAttributes() {
+      return {
+        src: {
+          default: null,
+        },
+        alt: {
+          default: null,
+        },
+        title: {
+          default: null,
+        },
+        style: {
+          default: 'text-align:center;width:100%;',
+        },
+      }
+    },
+    addNodeView() {
+      return ReactNodeViewRenderer(CustomImage)
+    },
+  }),
   Underline,
 ]
 
@@ -68,23 +92,25 @@ export default (props: IProps) => {
   }, [])
 
   return (
-    <div className={cx(styles.editor, status === 'error' && styles.invalid)}>
-      <EditorProvider
-        slotBefore={!readonly && <MenuBar />}
-        autofocus={false}
-        extensions={extensions}
-        editable={!readonly}
-        editorContainerProps={{ className: styles.editorContent }}
-        onBeforeCreate={e => (editorRef.current = e.editor)}
-        onUpdate={({ editor }) => {
-          const html = editor.getHTML()
-          if (html.match(/^<p><\/p>$/)) {
-            onChange?.('')
-          } else {
-            onChange?.(html)
-          }
-        }}
-      ></EditorProvider>
-    </div>
+    <ConfigProvider locale={zh_CN}>
+      <div className={cx(styles.editor, status === 'error' && styles.invalid)}>
+        <EditorProvider
+          slotBefore={!readonly && <MenuBar />}
+          autofocus={false}
+          extensions={extensions}
+          editable={!readonly}
+          editorContainerProps={{ className: styles.editorContent }}
+          onBeforeCreate={e => (editorRef.current = e.editor)}
+          onUpdate={({ editor }) => {
+            const html = editor.getHTML()
+            if (html.match(/^<p><\/p>$/)) {
+              onChange?.('')
+            } else {
+              onChange?.(html)
+            }
+          }}
+        ></EditorProvider>
+      </div>
+    </ConfigProvider>
   )
 }

@@ -1,11 +1,4 @@
-import { Fragment, StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import Editor from './Editor'
-import { Input } from 'antd'
+import App from './App'
 
-createRoot(document.getElementById('root')!).render(
-  <Fragment>
-    <Input />
-    <Editor />
-  </Fragment>,
-)
+createRoot(document.getElementById('root')!).render(<App />)

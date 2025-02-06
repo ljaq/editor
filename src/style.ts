@@ -6,9 +6,9 @@ export const useStyles = createStyles(({ token, css }) => {
       position: relative;
       border: 1px solid #d9d9d9;
       border-radius: ${token.borderRadius}px;
-      overflow: auto;
-      height: 400px;
+      overflow: hidden;
       transition: 0.2s;
+      background-color: ${token.colorBgContainer};
       &:hover {
         border-color: ${token.colorPrimaryBorderHover};
       }
@@ -17,14 +17,23 @@ export const useStyles = createStyles(({ token, css }) => {
         box-shadow: 0 0 0 2px ${token.colorPrimaryBg};
       }
     `,
+    invalid: css`
+      border-color: ${token.colorError};
+      &:hover {
+        border-color: ${token.colorErrorBorderHover};
+      }
+      &:has(.ProseMirror-focused) {
+        border-color: ${token.colorErrorActive};
+        box-shadow: 0 0 0 2px ${token.colorErrorBg};
+      }
+    `,
     menuBar: css`
-      position: sticky;
       top: 0;
       padding: 8px;
       border-bottom: 1px solid ${token.colorBorderSecondary};
-      background-color: rgba(255, 255, 255, 0.8);
-      backdrop-filter: blur(20px);
-      z-index: 10;
+      &:hover {
+        box-shadow: 0 0 4px 2px ${token.colorBgLayout};
+      }
       .anticon-caret-down {
         transform: scale(0.6);
         color: ${token.colorTextTertiary};
@@ -33,7 +42,6 @@ export const useStyles = createStyles(({ token, css }) => {
         padding: 5px 12px;
         width: 232px;
       }
-      ,
       .color-preview {
         position: relative;
         width: 16px;
@@ -85,6 +93,8 @@ export const useStyles = createStyles(({ token, css }) => {
     `,
     editorContent: css`
       padding: 8px;
+      overflow: auto;
+      height: 400px;
     `,
   }
 })

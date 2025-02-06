@@ -4,12 +4,14 @@ import ListItem from '@tiptap/extension-list-item'
 import TextStyle from '@tiptap/extension-text-style'
 import TextAlign from '@tiptap/extension-text-align'
 import Underline from '@tiptap/extension-underline'
-import { EditorProvider } from '@tiptap/react'
+import { Editor, EditorProvider } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 
 import './basic.less'
 import MenuBar from './components/MenuBar'
 import { useStyles } from './style'
+import { useEffect, useMemo, useRef } from 'react'
+import { Form } from 'antd'
 
 const extensions = [
   Color.configure({ types: [TextStyle.name, ListItem.name] }),
@@ -29,47 +31,50 @@ const extensions = [
   Underline,
 ]
 
-const content = `
-<h2>
-  Hi there,
-</h2>
-<p>
-  this is a <em>basic</em> example of <strong>Tiptap</strong>. Sure, there are all kind of basic text styles you’d probably expect from a text editor. But wait until you see the lists:
-</p>
-<ul>
-  <li>
-    <span style="color: #000fff">That’s a bullet list with one …</span>
-  </li>
-  <li>
-    … or two list items.
-  </li>
-</ul>
-<p>
-  Isn’t that great? And all of that is editable. But wait, there’s more. Let’s try a code block:
-</p>
-<pre><code class="language-css">body {
-  display: none;
-}</code></pre>
-<p>
-  I know, I know, this is impressive. It’s only the tip of the iceberg though. Give it a try and click a little bit around. Don’t forget to check the other examples too.
-</p>
-<blockquote>
-  Wow, that’s amazing. Good work, boy! 👏
-  <br />
-  — Mom
-</blockquote>
-`
+interface IProps {
+  value?: string
+  onChange?: (value: string) => void
+  readonly?: boolean
+}
 
-export default () => {
-  const { styles } = useStyles()
+export default (props: IProps) => {
+  const { value, onChange, readonly } = props
+  const { styles, cx } = useStyles()
+  const editorRef = useRef<Editor>()
+  const { status } = Form.Item.useStatus()
+
+  useEffect(() => {
+    if (editorRef.current && value !== editorRef.current.getHTML()) {
+      editorRef.current.commands.setContent(value || '')
+    }
+  }, [value])
+
+  useEffect(() => {
+    const editorDom = document.querySelector(`.${styles.editorContent}`) as HTMLDivElement
+    editorDom!.onclick = e => {
+      if (e.target === editorDom) {
+        editorRef.current?.commands.focus()
+      }
+    }
+  }, [])
+
   return (
-    <div className={styles.editor}>
+    <div className={cx(styles.editor, status === 'error' && styles.invalid)}>
       <EditorProvider
-        slotBefore={<MenuBar />}
+        slotBefore={!readonly && <MenuBar />}
         autofocus={false}
         extensions={extensions}
-        content={content}
+        editable={!readonly}
         editorContainerProps={{ className: styles.editorContent }}
+        onBeforeCreate={e => (editorRef.current = e.editor)}
+        onUpdate={({ editor }) => {
+          const html = editor.getHTML()
+          if (html.match(/^<p><\/p>$/)) {
+            onChange?.('')
+          } else {
+            onChange?.(html)
+          }
+        }}
       ></EditorProvider>
     </div>
   )

@@ -85,7 +85,7 @@ export default function MenuBar() {
 
   return (
     <div className={styles.menuBar}>
-      <Space>
+      <Space wrap>
         <TooltipButton
           title='撤销'
           shortcut='⌘ Z'

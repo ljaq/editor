@@ -1,4 +1,4 @@
-import { ConfigProvider, Form } from 'antd'
+import { App, ConfigProvider, Form } from 'antd'
 import zh_CN from 'antd/locale/zh_CN'
 import { Color } from '@tiptap/extension-color'
 import Image from '@tiptap/extension-image'
@@ -9,6 +9,7 @@ import TextAlign from '@tiptap/extension-text-align'
 import Underline from '@tiptap/extension-underline'
 import TaskItem from '@tiptap/extension-task-item'
 import TaskList from '@tiptap/extension-task-list'
+import Placeholder from '@tiptap/extension-placeholder'
 import { Editor, EditorProvider, ReactNodeViewRenderer } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import MenuBar from './components/MenuBar'
@@ -32,6 +33,11 @@ const extensions = [
       keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
     },
   }),
+  Placeholder.configure({
+    placeholder: () => {
+      return 'Can you add some further context?'
+    },
+  }),
   TextAlign.configure({ types: ['heading', 'paragraph'] }),
   Highlight.configure({ multicolor: true }),
   TaskList,
@@ -53,7 +59,7 @@ const extensions = [
           default: null,
         },
         style: {
-          default: 'text-align:center;width:100%;',
+          default: 'display:block;margin:0 auto 0;width:100%;',
         },
       }
     },
@@ -93,24 +99,26 @@ export default (props: IProps) => {
 
   return (
     <ConfigProvider locale={zh_CN}>
-      <div className={cx(styles.editor, status === 'error' && styles.invalid)}>
-        <EditorProvider
-          slotBefore={!readonly && <MenuBar />}
-          autofocus={false}
-          extensions={extensions}
-          editable={!readonly}
-          editorContainerProps={{ className: styles.editorContent }}
-          onBeforeCreate={e => (editorRef.current = e.editor)}
-          onUpdate={({ editor }) => {
-            const html = editor.getHTML()
-            if (html.match(/^<p><\/p>$/)) {
-              onChange?.('')
-            } else {
-              onChange?.(html)
-            }
-          }}
-        ></EditorProvider>
-      </div>
+      <App>
+        <div className={cx(styles.editor, status === 'error' && styles.invalid)}>
+          <EditorProvider
+            slotBefore={!readonly && <MenuBar />}
+            autofocus={false}
+            extensions={extensions}
+            editable={!readonly}
+            editorContainerProps={{ className: styles.editorContent }}
+            onBeforeCreate={e => (editorRef.current = e.editor)}
+            onUpdate={({ editor }) => {
+              const html = editor.getHTML()
+              if (html.match(/^<p><\/p>$/)) {
+                onChange?.('')
+              } else {
+                onChange?.(html)
+              }
+            }}
+          ></EditorProvider>
+        </div>
+      </App>
     </ConfigProvider>
   )
 }

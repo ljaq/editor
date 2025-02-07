@@ -964,6 +964,26 @@
   resolved "https://registry.npmmirror.com/@tiptap/extension-strike/-/extension-strike-2.11.5.tgz#94e214dcede09f6c5f99d0c58290a1d3f5db61eb"
   integrity sha512-PVfUiCqrjvsLpbIoVlegSY8RlkR64F1Rr2RYmiybQfGbg+AkSZXDeO0eIrc03//4gua7D9DfIozHmAKv1KN3ow==
 
+"@tiptap/extension-table-cell@^2.11.3":
+  version "2.11.3"
+  resolved "https://registry.npmmirror.com/@tiptap/extension-table-cell/-/extension-table-cell-2.11.3.tgz#322b0eb6eeb8f655442b86543a446815c490f6eb"
+  integrity sha512-evdzllWjBey8bzSR7sUxTdrHKjN6M3XOv+1XfaoQpqMr8ryRWDb6yPSEIssAjc8bIa7yvCl7jaXMreeXE7oBSQ==
+
+"@tiptap/extension-table-header@^2.11.3":
+  version "2.11.3"
+  resolved "https://registry.npmmirror.com/@tiptap/extension-table-header/-/extension-table-header-2.11.3.tgz#f849687a05fb9668398d84864ba6623b5a890f7e"
+  integrity sha512-Dcs7R0r5VDhuRvEfLhUKFvK9Yj2xPP8aTQ2UvLVCUJMlvo5Qv/xaJWDbXxH/AQ3wL4LvZomHTOWvdNad7WEkgg==
+
+"@tiptap/extension-table-row@^2.11.5":
+  version "2.11.5"
+  resolved "https://registry.npmmirror.com/@tiptap/extension-table-row/-/extension-table-row-2.11.5.tgz#0f10634918983687d0df212fe08f7f6111c3a840"
+  integrity sha512-+/VWhCuW24BcM5aaIc/f0bC6ZR1Q5gnuqw13MIo7gyPx7iIY6BXK8roGiZSs8wYAN4uBEf3EKFm0bSZwQuAeyg==
+
+"@tiptap/extension-table@^2.11.3":
+  version "2.11.3"
+  resolved "https://registry.npmmirror.com/@tiptap/extension-table/-/extension-table-2.11.3.tgz#64019677c6f85c018f78ab747bd473d1e881335e"
+  integrity sha512-yxtEXhWB3804Uzr1YEpA4eynBD2syJr0UXfaJmPiz2dVxDF0FtB4K/1OWzTWF1CUBdbQmGKmAQYXDzHOyecfDw==
+
 "@tiptap/extension-task-item@^2.11.5":
   version "2.11.5"
   resolved "https://registry.npmmirror.com/@tiptap/extension-task-item/-/extension-task-item-2.11.5.tgz#002bfa065e236cdd2151384fa2aad6fcb13ca485"

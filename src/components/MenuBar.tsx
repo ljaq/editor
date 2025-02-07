@@ -10,11 +10,12 @@ import {
   OrderedListOutlined,
   PictureOutlined,
   StrikethroughOutlined,
+  TableOutlined,
   UnderlineOutlined,
   UnorderedListOutlined,
 } from '@ant-design/icons'
 import { useCurrentEditor } from '@tiptap/react'
-import { Button, ColorPicker, Divider, Dropdown, MenuProps, Space } from 'antd'
+import { Button, ColorPicker, Divider, Dropdown, MenuProps, Popover, Space } from 'antd'
 import { useEffect, useState } from 'react'
 import { HeadingLevel } from '../types'
 import { getOptionsFromEnum } from '../utils'
@@ -25,6 +26,7 @@ import { colorList } from '../config'
 import FontColorIcon from './FontColorIcon'
 import moreColorIcon from '../assets/more-color.png'
 import BgColorIcon from './BgColorIcon'
+import TableSizeSelector from './TableSizeSelector'
 
 export default function MenuBar() {
   const { styles } = useStyles()
@@ -361,6 +363,22 @@ export default function MenuBar() {
           disabled={!editor.can().chain().focus().toggleTaskList().run()}
         />
         <Divider type='vertical' style={{ margin: 2 }} />
+        <Popover
+          destroyTooltipOnHide
+          placement='bottom'
+          content={() => (
+            <TableSizeSelector
+              onChange={(rows, cols) => editor.chain().focus().insertTable({ rows, cols, withHeaderRow: true }).run()}
+            />
+          )}
+        >
+          <Button
+            size='small'
+            icon={<TableOutlined />}
+            type='text'
+            onClick={() => editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()}
+          />
+        </Popover>
         <TooltipButton
           title='插入引用'
           shortcut='⇧ ⌘ U'

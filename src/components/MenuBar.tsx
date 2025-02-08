@@ -3,23 +3,20 @@ import {
   AlignLeftOutlined,
   AlignRightOutlined,
   BoldOutlined,
-  CameraOutlined,
   CaretDownOutlined,
   ItalicOutlined,
   LineOutlined,
   OrderedListOutlined,
-  PictureOutlined,
   StrikethroughOutlined,
-  TableOutlined,
   UnderlineOutlined,
   UnorderedListOutlined,
 } from '@ant-design/icons'
+import { InsertTable, Picture, Quote, Back, Next, Code, List } from '@icon-park/react'
 import { useCurrentEditor } from '@tiptap/react'
 import { Button, ColorPicker, Divider, Dropdown, MenuProps, Popover, Space } from 'antd'
 import { useEffect, useState } from 'react'
 import { HeadingLevel } from '../types'
 import { getOptionsFromEnum } from '../utils'
-import IconFont from '../utils/icon'
 import TooltipButton from './TooltipButton'
 import { useStyles } from '../style'
 import { colorList } from '../config'
@@ -27,6 +24,7 @@ import FontColorIcon from './FontColorIcon'
 import moreColorIcon from '../assets/more-color.png'
 import BgColorIcon from './BgColorIcon'
 import TableSizeSelector from './TableSizeSelector'
+import '@icon-park/react/styles/index.css'
 
 export default function MenuBar() {
   const { styles } = useStyles()
@@ -93,14 +91,14 @@ export default function MenuBar() {
         <TooltipButton
           title='撤销'
           shortcut='⌘ Z'
-          icon={<IconFont type='icon-undo' />}
+          icon={<Back />}
           onClick={() => editor.chain().focus().undo().run()}
           disabled={!editor.can().chain().focus().undo().run()}
         />
         <TooltipButton
           title='重做'
           shortcut='⌘ Y'
-          icon={<IconFont type='icon-redo' />}
+          icon={<Next />}
           onClick={() => editor.chain().focus().redo().run()}
           disabled={!editor.can().chain().focus().redo().run()}
         />
@@ -154,7 +152,7 @@ export default function MenuBar() {
         <TooltipButton
           title='代码'
           shortcut='⌘ E'
-          icon={<IconFont type='icon-inlinecode' />}
+          icon={<Code />}
           active={editor.isActive('code')}
           onClick={() => editor.chain().focus().toggleCode().run()}
           disabled={!editor.can().chain().focus().toggleCode().run()}
@@ -291,7 +289,7 @@ export default function MenuBar() {
         <TooltipButton
           title='插入图片'
           shortcut='⌘ E'
-          icon={<PictureOutlined />}
+          icon={<Picture />}
           onClick={() =>
             editor.chain().focus().setImage({ src: 'https://cn.bing.com/rp/kAwiv9gc4HPfHSU3xUQp2Xqm5wA.png' }).run()
           }
@@ -357,7 +355,7 @@ export default function MenuBar() {
         <TooltipButton
           title='任务列表'
           shortcut='⇧ ⌘ 8'
-          icon={<IconFont type='icon-checklist' />}
+          icon={<List />}
           active={editor.isActive('taskList')}
           onClick={() => editor.chain().focus().toggleTaskList().run()}
           disabled={!editor.can().chain().focus().toggleTaskList().run()}
@@ -374,7 +372,7 @@ export default function MenuBar() {
         >
           <Button
             size='small'
-            icon={<TableOutlined />}
+            icon={<InsertTable />}
             type='text'
             onClick={() => editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()}
           />
@@ -382,7 +380,7 @@ export default function MenuBar() {
         <TooltipButton
           title='插入引用'
           shortcut='⇧ ⌘ U'
-          icon={<IconFont type='icon-quote' />}
+          icon={<Quote />}
           active={editor.isActive('blockquote')}
           onClick={() => editor.chain().focus().toggleBlockquote().run()}
           disabled={!editor.can().chain().focus().toggleBlockquote().run()}

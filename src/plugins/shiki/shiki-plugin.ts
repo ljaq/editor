@@ -6,25 +6,15 @@ import { Node as ProsemirrorNode } from '@tiptap/pm/model'
 import { getShiki, initHighlighter, loadLanguage, loadTheme } from './highlighter.ts'
 
 /** Create code decorations for the current document */
-function getDecorations({
-  doc,
-  name,
-  defaultTheme,
-  defaultLanguage,
-}: {
-  doc: ProsemirrorNode
-  name: string
-  defaultLanguage: BundledLanguage | null | undefined
-  defaultTheme: BundledTheme
-}) {
+function getDecorations({ doc, name }: { doc: ProsemirrorNode; name: string }) {
   const decorations: Decoration[] = []
 
   const codeBlocks = findChildren(doc, node => node.type.name === name)
 
   codeBlocks.forEach(block => {
     let from = block.pos + 1
-    let language = block.node.attrs.language || defaultLanguage
-    let theme = block.node.attrs.theme || defaultTheme
+    let language = block.node.attrs.language
+    let theme = block.node.attrs.theme
 
     const highlighter = getShiki()
 
@@ -61,15 +51,7 @@ function getDecorations({
   return DecorationSet.create(doc, decorations)
 }
 
-export function ShikiPlugin({
-  name,
-  defaultLanguage,
-  defaultTheme,
-}: {
-  name: string
-  defaultLanguage: BundledLanguage | null | undefined
-  defaultTheme: BundledTheme
-}) {
+export function ShikiPlugin({ name }: { name: string }) {
   const shikiPlugin: Plugin<any> = new Plugin({
     key: new PluginKey('shiki'),
 
@@ -88,7 +70,7 @@ export function ShikiPlugin({
         // Initialize shiki async, and then highlight initial document
         async initDecorations() {
           const doc = view.state.doc
-          await initHighlighter({ doc, name, defaultLanguage, defaultTheme })
+          await initHighlighter({ doc, name })
           const tr = view.state.tr.setMeta('shikiPluginForceDecoration', true)
           view.dispatch(tr)
         }
@@ -124,8 +106,6 @@ export function ShikiPlugin({
         return getDecorations({
           doc,
           name,
-          defaultLanguage,
-          defaultTheme,
         })
       },
       apply: (transaction, decorationSet, oldState, newState) => {
@@ -168,8 +148,6 @@ export function ShikiPlugin({
           return getDecorations({
             doc: transaction.doc,
             name,
-            defaultLanguage,
-            defaultTheme,
           })
         }
 

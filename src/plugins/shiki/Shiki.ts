@@ -1,3 +1,4 @@
+import { mergeAttributes } from '@tiptap/core'
 import CodeBlock, { CodeBlockOptions } from '@tiptap/extension-code-block'
 import { BundledLanguage, BundledTheme } from 'shiki'
 
@@ -16,6 +17,36 @@ export const Shiki = CodeBlock.extend<CodeBlockShikiOptions>({
       ...this.parent?.(),
       theme: {
         default: 'ayu-light',
+        parseHTML: element => {
+          const language = element.getAttribute('data-theme')
+          if (!language) {
+            return null
+          }
+          return language
+        },
+        rendered: false,
+      },
+      language: {
+        default: '',
+        parseHTML: element => {
+          const language = element.getAttribute('data-language')
+          if (!language) {
+            return null
+          }
+          return language
+        },
+        rendered: false,
+      },
+      name: {
+        default: '',
+        parseHTML: element => {
+          const name = element.getAttribute('data-name')
+          if (!name) {
+            return null
+          }
+          return name
+        },
+        rendered: false,
       },
     }
   },
@@ -23,7 +54,7 @@ export const Shiki = CodeBlock.extend<CodeBlockShikiOptions>({
     return {
       ...this.parent?.(),
       defaultLanguage: null,
-      defaultTheme: 'github-light',
+      defaultTheme: 'ayu-light' as any,
     }
   },
 
@@ -35,6 +66,18 @@ export const Shiki = CodeBlock.extend<CodeBlockShikiOptions>({
         defaultLanguage: this.options.defaultLanguage,
         defaultTheme: this.options.defaultTheme,
       }),
+    ]
+  },
+
+  renderHTML({ node, HTMLAttributes }) {
+    return [
+      'pre',
+      mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, {
+        'data-language': node.attrs.language || null,
+        'data-theme': node.attrs.theme || null,
+        'data-name': node.attrs.name || null,
+      }),
+      ['code', {}, 0],
     ]
   },
 

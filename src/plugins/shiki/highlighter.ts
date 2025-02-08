@@ -1,6 +1,7 @@
 import { createHighlighter, Highlighter, BundledLanguage, BundledTheme, bundledLanguages, bundledThemes } from 'shiki'
 import { findChildren } from '@tiptap/core'
 import { Node as ProsemirrorNode } from '@tiptap/pm/model'
+import ayuLight from './theme/ayu-light.json'
 
 let highlighter: Highlighter | undefined
 let highlighterPromise: Promise<void> | undefined
@@ -25,7 +26,10 @@ export function getShiki() {
 
 export function loadHighlighter(opts: HighlighterOptions) {
   if (!highlighter && !highlighterPromise) {
-    const themes = opts.themes.filter((theme): theme is BundledTheme => !!theme && theme in bundledThemes)
+    const themes: any = [
+      ayuLight,
+      ...opts.themes.filter((theme): theme is BundledTheme => !!theme && theme in bundledThemes),
+    ]
     const langs = opts.languages.filter((lang): lang is BundledLanguage => !!lang && lang in bundledLanguages)
     highlighterPromise = createHighlighter({ themes, langs }).then(h => {
       highlighter = h
@@ -70,21 +74,11 @@ export async function loadLanguage(language: BundledLanguage) {
   return false
 }
 
-export async function initHighlighter({
-  doc,
-  name,
-  defaultTheme,
-  defaultLanguage,
-}: {
-  doc: ProsemirrorNode
-  name: string
-  defaultLanguage: BundledLanguage | null | undefined
-  defaultTheme: BundledTheme
-}) {
+export async function initHighlighter({ doc, name }: { doc: ProsemirrorNode; name: string }) {
   const codeBlocks = findChildren(doc, node => node.type.name === name)
 
-  const themes = [...codeBlocks.map(block => block.node.attrs.theme as BundledTheme), defaultTheme]
-  const languages = [...codeBlocks.map(block => block.node.attrs.language as BundledLanguage), defaultLanguage]
+  const themes = [...codeBlocks.map(block => block.node.attrs.theme as BundledTheme)]
+  const languages = [...codeBlocks.map(block => block.node.attrs.language as BundledLanguage)]
 
   if (!highlighter) {
     const loader = loadHighlighter({ languages, themes })

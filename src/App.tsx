@@ -5,56 +5,9 @@ import { useEffect } from 'react'
 // https://cn.bing.com/rp/kAwiv9gc4HPfHSU3xUQp2Xqm5wA.png
 
 const content = `
-<h2>
-  Hi there,
-</h2>
-<p>
-  this is a <em>basic</em> example of <strong>Tiptap</strong>. Sure, there are all kind of basic text styles you’d probably expect from a text editor. But wait until you see the lists:
-</p>
-<ul>
-  <li>
-    <span style="color: #000fff">That’s a bullet list with one …</span>
-  </li>
-  <li>
-    … or two list items.
-  </li>
-</ul>
-<p>
-  Isn’t that great? And all of that is editable. But wait, there’s more. Let’s try a code block:
-</p>
-<pre><code class="language-css">body {
+<h2>Hi there,</h2><p>this is a <em>basic</em> example of <strong>Tiptap</strong>. Sure, there are all kind of basic text styles you’d probably expect from a text editor. But wait until you see the lists:</p><ul><li><p><span style="color: rgb(0, 15, 255)">That’s a bullet list with one …</span></p></li><li><p>… or two list items.</p></li></ul><p>Isn’t that great? And all of that is editable. But wait, there’s more. Let’s try a code block:</p><pre data-language="css" data-theme="github-light" data-name="123"><code>body {
   display: none;
-}</code></pre>
-<p>
-  I know, I know, this is impressive. It’s only the tip of the iceberg though. Give it a try and click a little bit around. Don’t forget to check the other examples too.
-</p>
-<table style="width:100%">
-    <tr>
-      <th>Firstname</th>
-      <th>Lastname</th>
-      <th>Age</th>
-    </tr>
-    <tr>
-      <td>Jill</td>
-      <td>Smith</td>
-      <td>50</td>
-    </tr>
-    <tr>
-      <td>Eve</td>
-      <td>Jackson</td>
-      <td>94</td>
-    </tr>
-    <tr>
-      <td>John</td>
-      <td>Doe</td>
-      <td>80</td>
-    </tr>
-  </table>
-<blockquote>
-  Wow, that’s amazing. Good work, boy! 👏
-  <br />
-  — Mom
-</blockquote>
+}</code></pre><p>I know, I know, this is impressive. It’s only the tip of the iceberg though. Give it a try and click a little bit around. Don’t forget to check the other examples too.</p><table style="min-width: 75px"><colgroup><col style="min-width: 25px"><col style="min-width: 25px"><col style="min-width: 25px"></colgroup><tbody><tr><th colspan="1" rowspan="1"><p>Firstname</p></th><th colspan="1" rowspan="1"><p>Lastname</p></th><th colspan="1" rowspan="1"><p>Age</p></th></tr><tr><td colspan="1" rowspan="1"><p>Jill</p></td><td colspan="1" rowspan="1"><p>Smith</p></td><td colspan="1" rowspan="1"><p>50</p></td></tr><tr><td colspan="1" rowspan="1"><p>Eve</p></td><td colspan="1" rowspan="1"><p>Jackson</p></td><td colspan="1" rowspan="1"><p>94</p></td></tr><tr><td colspan="1" rowspan="1"><p>John</p></td><td colspan="1" rowspan="1"><p>Doe</p></td><td colspan="1" rowspan="1"><p>80</p></td></tr></tbody></table><blockquote><p>Wow, that’s amazing. Good work, boy! 👏 <br>— Mom</p></blockquote>
 `
 
 export default function App() {

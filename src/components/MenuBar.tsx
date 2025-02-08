@@ -170,7 +170,7 @@ export default function MenuBar() {
             getPopupContainer={e => e.parentElement!}
             dropdownRender={() => (
               <div className='ant-dropdown-menu'>
-                <div className='ant-dropdown-menu-item'>
+                <div className='ant-dropdown-menu-item' onClick={() => editor.chain().focus().unsetColor().run()}>
                   <Space>
                     <div className='color-preview default' />
                     <span>默认</span>
@@ -234,7 +234,7 @@ export default function MenuBar() {
             getPopupContainer={e => e.parentElement!}
             dropdownRender={() => (
               <div className='ant-dropdown-menu'>
-                <div className='ant-dropdown-menu-item'>
+                <div className='ant-dropdown-menu-item' onClick={() => editor.chain().focus().unsetHighlight().run()}>
                   <Space>
                     <div className='color-preview default' />
                     <span>无填充色</span>

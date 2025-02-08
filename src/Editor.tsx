@@ -21,6 +21,7 @@ import { useStyles } from './style'
 import { useEffect, useRef } from 'react'
 import CustomTaskItem from './components/CustomNodes/CustomTaskItem'
 import CustomImage from './components/CustomNodes/CustomImage'
+import Shiki from './plugins/shiki'
 
 const extensions = [
   Color.configure({ types: [TextStyle.name, ListItem.name] }),
@@ -74,6 +75,7 @@ const extensions = [
   TableRow,
   TableHeader,
   TableCell,
+  Shiki,
 ]
 
 interface IProps {

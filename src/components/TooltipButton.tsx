@@ -33,7 +33,6 @@ export default function TooltipButton({
       placement='bottom'
       {...tip}
       open={disabled ? false : undefined}
-      getPopupContainer={el => el.parentElement!}
     >
       <Button
         type='text'

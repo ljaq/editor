@@ -1,4 +1,3 @@
-import { BundledLanguage, BundledTheme } from 'shiki'
 import { findChildren } from '@tiptap/core'
 import { Plugin, PluginKey, PluginView } from '@tiptap/pm/state'
 import { Decoration, DecorationSet } from '@tiptap/pm/view'

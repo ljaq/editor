@@ -61,7 +61,7 @@ export default function MenuBar() {
   })
 
   useEffect(() => {
-    editor.on('selectionUpdate', e => {
+    editor.on('selectionUpdate', () => {
       if (editor.isActive('paragraph')) {
         return setCurrentHeading(HeadingLevel.正文)
       }
@@ -181,7 +181,7 @@ export default function MenuBar() {
                 <div className='color-preview-menu'>
                   {colorList.map((item, index) => (
                     <Space key={index} className='color-preview-row'>
-                      {item.map((color, index) => (
+                      {item.map(color => (
                         <div
                           className={`color-preview clickable ${
                             editor.isActive('textStyle', { color }) ? 'active' : ''
@@ -245,7 +245,7 @@ export default function MenuBar() {
                 <div className='color-preview-menu'>
                   {colorList.map((item, index) => (
                     <Space key={index} className='color-preview-row'>
-                      {item.map((color, index) => (
+                      {item.map(color => (
                         <div
                           className={`color-preview clickable ${
                             editor.isActive('textStyle', { color }) ? 'active' : ''

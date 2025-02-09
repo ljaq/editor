@@ -1,5 +1,5 @@
 import { Button, Form } from 'antd'
-import Editor from './Editor'
+import { Editor } from '../dist/index.js'
 import { useEffect } from 'react'
 
 // https://cn.bing.com/rp/kAwiv9gc4HPfHSU3xUQp2Xqm5wA.png

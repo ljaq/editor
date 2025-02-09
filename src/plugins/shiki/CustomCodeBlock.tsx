@@ -128,7 +128,7 @@ export default function CustomCodeBlock({ node, updateAttributes, deleteNode, ed
   )
 }
 
-const useStyles = createStyles<{ theme: string }, { codeBlock: any }>(({ css, token, isDarkMode }, { theme }) => {
+const useStyles = createStyles<{ theme: string }, { codeBlock: any }>(({ css, isDarkMode }, { theme }) => {
   const shiki = getShiki()
   const themeConf = shiki?.getLoadedThemes().includes(theme) ? shiki?.getTheme(theme) : null
 

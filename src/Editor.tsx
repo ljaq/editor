@@ -14,7 +14,7 @@ import Table from '@tiptap/extension-table'
 import TableCell from '@tiptap/extension-table-cell'
 import TableHeader from '@tiptap/extension-table-header'
 import TableRow from '@tiptap/extension-table-row'
-import { Editor, EditorProvider, ReactNodeViewRenderer } from '@tiptap/react'
+import { Editor as TiptapEditor, EditorProvider, ReactNodeViewRenderer } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import MenuBar from './components/MenuBar'
 import { useStyles } from './style'
@@ -25,7 +25,7 @@ import Shiki from './plugins/shiki'
 
 const extensions = [
   Color.configure({ types: [TextStyle.name, ListItem.name] }),
-  TextStyle.configure({ types: [ListItem.name] }),
+  TextStyle.configure({ types: [ListItem.name] } as any),
   StarterKit.configure({
     bulletList: {
       keepMarks: true,
@@ -78,16 +78,16 @@ const extensions = [
   Shiki,
 ]
 
-interface IProps {
+export interface EditorProps {
   value?: string
   onChange?: (value: string) => void
   readonly?: boolean
 }
 
-export default (props: IProps) => {
+export function Editor(props: EditorProps) {
   const { value, onChange, readonly } = props
   const { styles, cx } = useStyles()
-  const editorRef = useRef<Editor>()
+  const editorRef = useRef<TiptapEditor>()
   const { status } = Form.Item.useStatus()
 
   useEffect(() => {

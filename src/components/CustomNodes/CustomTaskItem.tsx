@@ -1,5 +1,5 @@
 import { NodeViewContent, NodeViewProps, NodeViewWrapper } from '@tiptap/react'
-import { Checkbox, Input, Space } from 'antd'
+import { Checkbox } from 'antd'
 import { createStyles } from 'antd-style'
 
 export default function CustomTaskList({ node, updateAttributes }: NodeViewProps) {

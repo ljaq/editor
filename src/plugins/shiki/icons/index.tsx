@@ -12,7 +12,7 @@ import sql from './sql.svg'
 import tsx from './tsx.svg'
 import typescript from './typescript.svg'
 import vue from './vue.svg'
-import txt from './txt.svg'
+import plaintext from './txt.svg'
 
 export default {
   c,
@@ -29,5 +29,5 @@ export default {
   tsx,
   typescript,
   vue,
-  txt,
+  plaintext,
 }

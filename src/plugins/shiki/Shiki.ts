@@ -20,18 +20,18 @@ export const Shiki = CodeBlock.extend<CodeBlockShikiOptions>({
         parseHTML: element => {
           const language = element.getAttribute('data-theme')
           if (!language) {
-            return null
+            return 'ayu-light'
           }
           return language
         },
         rendered: false,
       },
       language: {
-        default: '',
+        default: 'plaintext',
         parseHTML: element => {
           const language = element.getAttribute('data-language')
           if (!language) {
-            return null
+            return 'plaintext'
           }
           return language
         },
@@ -42,7 +42,7 @@ export const Shiki = CodeBlock.extend<CodeBlockShikiOptions>({
         parseHTML: element => {
           const name = element.getAttribute('data-name')
           if (!name) {
-            return null
+            return ''
           }
           return name
         },
@@ -59,14 +59,7 @@ export const Shiki = CodeBlock.extend<CodeBlockShikiOptions>({
   },
 
   addProseMirrorPlugins() {
-    return [
-      ...(this.parent?.() || []),
-      ShikiPlugin({
-        name: this.name,
-        defaultLanguage: this.options.defaultLanguage,
-        defaultTheme: this.options.defaultTheme,
-      }),
-    ]
+    return [...(this.parent?.() || []), ShikiPlugin({ name: this.name })]
   },
 
   renderHTML({ node, HTMLAttributes }) {

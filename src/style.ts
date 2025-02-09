@@ -42,14 +42,13 @@ export const useStyles = createStyles(({ token, css }) => {
         h5,
         h6 {
           line-height: 1.1;
-          margin-top: 2.5rem;
+          margin-top: 2rem;
           text-wrap: pretty;
         }
 
         h1,
         h2 {
-          margin-top: 3.5rem;
-          margin-bottom: 1.5rem;
+          margin-bottom: 1.2rem;
         }
 
         h1 {
@@ -251,7 +250,7 @@ export const useStyles = createStyles(({ token, css }) => {
       }
     `,
     editorContent: css`
-      padding: 8px;
+      padding: 0 16px;
       overflow: auto;
       height: 400px;
     `,

@@ -1,5 +1,5 @@
 export const languages = [
-  'plain text',
+  'plaintext',
   'html',
   'css',
   'javascript',

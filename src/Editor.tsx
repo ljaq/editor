@@ -114,7 +114,7 @@ export default (props: IProps) => {
             autofocus={false}
             extensions={extensions}
             editable={!readonly}
-            editorContainerProps={{ className: styles.editorContent }}
+            editorContainerProps={{ className: styles.editorContent, spellCheck: false }}
             onBeforeCreate={e => (editorRef.current = e.editor)}
             onUpdate={({ editor }) => {
               const html = editor.getHTML()

@@ -4,6 +4,7 @@ import {
   AlignRightOutlined,
   BoldOutlined,
   CaretDownOutlined,
+  CodeOutlined,
   ItalicOutlined,
   LineOutlined,
   OrderedListOutlined,
@@ -384,6 +385,14 @@ export default function MenuBar() {
           active={editor.isActive('blockquote')}
           onClick={() => editor.chain().focus().toggleBlockquote().run()}
           disabled={!editor.can().chain().focus().toggleBlockquote().run()}
+        />
+        <TooltipButton
+          title='插入代码块'
+          shortcut='⇧ ⌘ U'
+          icon={<CodeOutlined />}
+          active={editor.isActive('codeBlock')}
+          onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+          disabled={!editor.can().chain().focus().toggleCodeBlock().run()}
         />
         <TooltipButton
           title='插入分隔线'

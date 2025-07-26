@@ -4,17 +4,21 @@ export const useStyles = createStyles(({ token, css }) => {
   return {
     editor: css`
       position: relative;
-      border: 1px solid #d9d9d9;
-      border-radius: ${token.borderRadius}px;
-      overflow: hidden;
       transition: 0.2s;
-      background-color: ${token.colorBgContainer};
-      &:hover {
-        border-color: ${token.colorPrimaryBorderHover};
-      }
-      &:has(.ProseMirror-focused) {
-        border-color: ${token.colorPrimaryActive};
-        box-shadow: 0 0 0 2px ${token.colorPrimaryBg};
+      outline: none;
+      box-shadow: none;
+      &.card {
+        border: 1px solid ${token.colorBorder};
+        border-radius: ${token.borderRadius}px;
+        background-color: ${token.colorBgContainer};
+        overflow: hidden;
+        &:hover {
+          border-color: ${token.colorPrimaryBorderHover};
+        }
+        &:has(.ProseMirror-focused) {
+          border-color: ${token.colorPrimaryActive};
+          box-shadow: 0 0 0 2px ${token.colorPrimaryBg};
+        }
       }
       .tiptap {
         outline: none;
@@ -176,19 +180,26 @@ export const useStyles = createStyles(({ token, css }) => {
       }
     `,
     invalid: css`
-      border-color: ${token.colorError};
-      &:hover {
-        border-color: ${token.colorErrorBorderHover};
-      }
-      &:has(.ProseMirror-focused) {
-        border-color: ${token.colorErrorActive};
-        box-shadow: 0 0 0 2px ${token.colorErrorBg};
+      &.card {
+        border-color: ${token.colorError};
+        &:hover {
+          border-color: ${token.colorErrorBorderHover};
+        }
+        &:has(.ProseMirror-focused) {
+          border-color: ${token.colorErrorActive};
+          box-shadow: 0 0 0 2px ${token.colorErrorBg};
+        }
       }
     `,
     menuBar: css`
       top: 0;
       padding: 8px;
       border-bottom: 1px solid ${token.colorBorderSecondary};
+      &.fullPage {
+        position: sticky;
+        z-index: 999;
+        background-color: ${token.colorBgContainer};
+      }
       &:hover {
         box-shadow: 0 0 4px 2px ${token.colorBgLayout};
       }
@@ -250,8 +261,13 @@ export const useStyles = createStyles(({ token, css }) => {
     `,
     editorContent: css`
       padding: 0 16px;
-      overflow: auto;
-      height: 400px;
+      .card {
+        overflow: auto;
+        height: 400px;
+      }
+      &.fullPage {
+        margin: 0 auto;
+      }
     `,
   }
 })

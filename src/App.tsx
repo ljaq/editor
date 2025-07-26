@@ -1,6 +1,7 @@
-import { Button, Form } from 'antd'
+import { Button, Form, Input } from 'antd'
 import { Editor } from './index'
 import { useEffect } from 'react'
+import './assets/index.css'
 
 // https://cn.bing.com/rp/kAwiv9gc4HPfHSU3xUQp2Xqm5wA.png
 
@@ -25,7 +26,7 @@ export default function App() {
   return (
     <Form form={form} onFinish={handleSubmit}>
       <Form.Item name='editor' rules={[{ required: true }]}>
-        <Editor />
+        <Editor mode='card' />
       </Form.Item>
       <Form.Item>
         <Button type='primary' htmlType='submit'>

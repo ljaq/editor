@@ -1,7 +1,5 @@
 const { defineConfig } = require('cz-git')
 
-const scopes = []
-
 module.exports = defineConfig({
   types: [
     { value: '✨ feat', name: '✨ feat:     新增功能 | A new feature' },
@@ -13,20 +11,18 @@ module.exports = defineConfig({
     { value: '🤔 test', name: '🤔 test:     测试相关 | Adding missing tests or correcting existing tests' },
     {
       value: '📦️ build',
-      name: '📦️ build:    构建相关 | Changes that affect the build system or external dependencies'
+      name: '📦️ build:    构建相关 | Changes that affect the build system or external dependencies',
     },
     { value: '🎡 ci', name: '🎡 ci:       持续集成 | Changes to our CI configuration files and scripts' },
     { value: '🚫 revert', name: '🚫 revert:   回退代码 | Revert to a commit' },
-    { value: '📁 chore', name: '📁 chore:    其他修改 | Other changes that do not modify src or test files' }
+    { value: '📁 chore', name: '📁 chore:    其他修改 | Other changes that do not modify src or test files' },
   ],
-  // 需求取pages下面的目录、其它为other
-  scopes: ['other', ...scopes],
   messages: {
     type: '选择一种你的提交类型:',
     scope: '选择一个scope (可选):',
     subject: '短说明:',
-    confirmCommit: '确定提交commit吗?'
+    confirmCommit: '确定提交commit吗?',
   },
   subjectLimit: 100,
-  skipQuestions: ['body', 'breaking', 'footer']
+  skipQuestions: ['body', 'breaking', 'footer', 'scope'],
 })

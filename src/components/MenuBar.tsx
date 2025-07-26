@@ -26,13 +26,15 @@ import moreColorIcon from '../assets/more-color.png'
 import BgColorIcon from './BgColorIcon'
 import TableSizeSelector from './TableSizeSelector'
 import '@icon-park/react/styles/index.css'
+import { useJQEditor } from '../Editor'
 
 export default function MenuBar() {
-  const { styles } = useStyles()
+  const { styles, cx } = useStyles()
   const { editor } = useCurrentEditor()
   const [currentHeading, setCurrentHeading] = useState(HeadingLevel.正文)
   const [lastCustomColor, setLastCustomColor] = useState<string>('#df2a3f')
   const [lastCustomBg, setLastCustomBg] = useState<string>('#FBDE28')
+  const jqEditor = useJQEditor()
 
   if (!editor) {
     return null
@@ -87,7 +89,7 @@ export default function MenuBar() {
   }, [])
 
   return (
-    <div className={styles.menuBar}>
+    <div className={cx(styles.menuBar, jqEditor.mode)}>
       <Space wrap>
         <TooltipButton
           title='撤销'

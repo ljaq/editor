@@ -261,7 +261,7 @@ export const useStyles = createStyles(({ token, css }) => {
     `,
     editorContent: css`
       padding: 0 16px;
-      .card {
+      &.card {
         overflow: auto;
         height: 400px;
       }

@@ -1,4 +1,4 @@
-import { App, ConfigProvider, Form } from 'antd'
+import { App, ConfigProvider, Form, UploadProps } from 'antd'
 import zh_CN from 'antd/locale/zh_CN'
 import { Color } from '@tiptap/extension-color'
 import Image from '@tiptap/extension-image'
@@ -18,7 +18,7 @@ import { Editor as TiptapEditor, EditorProvider, ReactNodeViewRenderer } from '@
 import StarterKit from '@tiptap/starter-kit'
 import MenuBar from './components/MenuBar'
 import { useStyles } from './style'
-import { useEffect, useRef } from 'react'
+import { createContext, useContext, useEffect, useRef } from 'react'
 import CustomTaskItem from './components/CustomNodes/CustomTaskItem'
 import CustomImage from './components/CustomNodes/CustomImage'
 import Shiki from './plugins/shiki'
@@ -82,6 +82,13 @@ export interface EditorProps {
   value?: string
   onChange?: (value: string) => void
   readonly?: boolean
+  uploadProps?: UploadProps
+}
+
+const JQEditorContext = createContext<EditorProps>({})
+
+export function useJQEditor() {
+  return useContext(JQEditorContext)
 }
 
 export function Editor(props: EditorProps) {
@@ -108,24 +115,26 @@ export function Editor(props: EditorProps) {
   return (
     <ConfigProvider locale={zh_CN}>
       <App>
-        <div className={cx(styles.editor, status === 'error' && styles.invalid)}>
-          <EditorProvider
-            slotBefore={!readonly && <MenuBar />}
-            autofocus={false}
-            extensions={extensions}
-            editable={!readonly}
-            editorContainerProps={{ className: styles.editorContent, spellCheck: false }}
-            onBeforeCreate={e => (editorRef.current = e.editor)}
-            onUpdate={({ editor }) => {
-              const html = editor.getHTML()
-              if (html.match(/^<p><\/p>$/)) {
-                onChange?.('')
-              } else {
-                onChange?.(html)
-              }
-            }}
-          ></EditorProvider>
-        </div>
+        <JQEditorContext.Provider value={{ ...props }}>
+          <div className={cx(styles.editor, status === 'error' && styles.invalid)}>
+            <EditorProvider
+              slotBefore={!readonly && <MenuBar />}
+              autofocus={false}
+              extensions={extensions}
+              editable={!readonly}
+              editorContainerProps={{ className: styles.editorContent, spellCheck: false }}
+              onBeforeCreate={e => (editorRef.current = e.editor)}
+              onUpdate={({ editor }) => {
+                const html = editor.getHTML()
+                if (html.match(/^<p><\/p>$/)) {
+                  onChange?.('')
+                } else {
+                  onChange?.(html)
+                }
+              }}
+            ></EditorProvider>
+          </div>
+        </JQEditorContext.Provider>
       </App>
     </ConfigProvider>
   )

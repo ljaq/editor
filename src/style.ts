@@ -226,7 +226,6 @@ export const useStyles = createStyles(({ token, css }) => {
         &.clickable {
           &:hover {
             box-shadow: 0 0 2px 2px ${token.colorBorder};
-            border: 2px solid ${token.colorBgContainer};
             transform: scale(1.2);
           }
         }

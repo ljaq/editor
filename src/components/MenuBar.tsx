@@ -91,14 +91,12 @@ export default function MenuBar() {
       <Space wrap>
         <TooltipButton
           title='撤销'
-          shortcut='⌘ Z'
           icon={<Back />}
           onClick={() => editor.chain().focus().undo().run()}
           disabled={!editor.can().chain().focus().undo().run()}
         />
         <TooltipButton
           title='重做'
-          shortcut='⌘ Y'
           icon={<Next />}
           onClick={() => editor.chain().focus().redo().run()}
           disabled={!editor.can().chain().focus().redo().run()}
@@ -120,7 +118,6 @@ export default function MenuBar() {
         </Dropdown>
         <TooltipButton
           title='加粗'
-          shortcut='⌘ B'
           icon={<BoldOutlined />}
           active={editor.isActive('bold')}
           onClick={() => editor.chain().focus().toggleBold().run()}
@@ -128,7 +125,6 @@ export default function MenuBar() {
         />
         <TooltipButton
           title='倾斜'
-          shortcut='⌘ I'
           icon={<ItalicOutlined />}
           active={editor.isActive('italic')}
           onClick={() => editor.chain().focus().toggleItalic().run()}
@@ -136,7 +132,6 @@ export default function MenuBar() {
         />
         <TooltipButton
           title='下划线'
-          shortcut='⌘ U'
           icon={<UnderlineOutlined />}
           active={editor.isActive('underline')}
           onClick={() => editor.chain().focus().toggleUnderline().run()}
@@ -144,7 +139,6 @@ export default function MenuBar() {
         />
         <TooltipButton
           title='删除线'
-          shortcut='⌘ D'
           icon={<StrikethroughOutlined />}
           active={editor.isActive('strike')}
           onClick={() => editor.chain().focus().toggleStrike().run()}
@@ -152,7 +146,6 @@ export default function MenuBar() {
         />
         <TooltipButton
           title='代码'
-          shortcut='⌘ E'
           icon={<Code />}
           active={editor.isActive('code')}
           onClick={() => editor.chain().focus().toggleCode().run()}
@@ -289,11 +282,8 @@ export default function MenuBar() {
         </Space.Compact>
         <TooltipButton
           title='插入图片'
-          shortcut='⌘ E'
           icon={<Picture />}
-          onClick={() =>
-            editor.chain().focus().setImage({ src: 'https://cn.bing.com/rp/kAwiv9gc4HPfHSU3xUQp2Xqm5wA.png' }).run()
-          }
+          onClick={() => editor.chain().focus().setImage({ src: '' }).run()}
           disabled={!editor.can().chain().focus().toggleCode().run()}
         />
         <Divider type='vertical' style={{ margin: 2 }} />
@@ -339,7 +329,6 @@ export default function MenuBar() {
         </Dropdown>
         <TooltipButton
           title='无序列表'
-          shortcut='⌘ ⇧ 7'
           icon={<UnorderedListOutlined />}
           active={editor.isActive('bulletList')}
           onClick={() => editor.chain().focus().toggleBulletList().run()}
@@ -347,7 +336,6 @@ export default function MenuBar() {
         />
         <TooltipButton
           title='有序列表'
-          shortcut='⇧ ⌘ 8'
           icon={<OrderedListOutlined />}
           active={editor.isActive('orderedList')}
           onClick={() => editor.chain().focus().toggleOrderedList().run()}
@@ -355,7 +343,6 @@ export default function MenuBar() {
         />
         <TooltipButton
           title='任务列表'
-          shortcut='⇧ ⌘ 8'
           icon={<List />}
           active={editor.isActive('taskList')}
           onClick={() => editor.chain().focus().toggleTaskList().run()}
@@ -363,7 +350,7 @@ export default function MenuBar() {
         />
         <Divider type='vertical' style={{ margin: 2 }} />
         <Popover
-          destroyTooltipOnHide
+          destroyOnHidden
           placement='bottom'
           content={() => (
             <TableSizeSelector
@@ -380,7 +367,6 @@ export default function MenuBar() {
         </Popover>
         <TooltipButton
           title='插入引用'
-          shortcut='⇧ ⌘ U'
           icon={<Quote />}
           active={editor.isActive('blockquote')}
           onClick={() => editor.chain().focus().toggleBlockquote().run()}
@@ -388,7 +374,6 @@ export default function MenuBar() {
         />
         <TooltipButton
           title='插入代码块'
-          shortcut='⇧ ⌘ U'
           icon={<CodeOutlined />}
           active={editor.isActive('codeBlock')}
           onClick={() => editor.chain().focus().toggleCodeBlock().run()}
@@ -396,7 +381,6 @@ export default function MenuBar() {
         />
         <TooltipButton
           title='插入分隔线'
-          shortcut='⇧ ⌘ U'
           icon={<LineOutlined />}
           onClick={() => editor.chain().focus().setHorizontalRule().run()}
         />

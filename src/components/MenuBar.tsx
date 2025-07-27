@@ -5,6 +5,7 @@ import {
   BoldOutlined,
   CaretDownOutlined,
   CodeOutlined,
+  FileAddOutlined,
   ItalicOutlined,
   LineOutlined,
   OrderedListOutlined,
@@ -286,6 +287,12 @@ export default function MenuBar() {
           title='插入图片'
           icon={<Picture />}
           onClick={() => editor.chain().focus().setImage({ src: '' }).run()}
+          disabled={!editor.can().chain().focus().toggleCode().run()}
+        />
+        <TooltipButton
+          title='插入文件'
+          icon={<FileAddOutlined />}
+          onClick={() => editor.chain().focus().insertContent('<file src=""></file>').run()}
           disabled={!editor.can().chain().focus().toggleCode().run()}
         />
         <Divider type='vertical' style={{ margin: 2 }} />

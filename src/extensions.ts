@@ -1,5 +1,3 @@
-import { App, ConfigProvider, Form, UploadProps } from 'antd'
-import zh_CN from 'antd/locale/zh_CN'
 import { Color } from '@tiptap/extension-color'
 import Image from '@tiptap/extension-image'
 import Highlight from '@tiptap/extension-highlight'
@@ -14,14 +12,13 @@ import { Table } from '@tiptap/extension-table'
 import TableCell from '@tiptap/extension-table-cell'
 import TableHeader from '@tiptap/extension-table-header'
 import TableRow from '@tiptap/extension-table-row'
-import { Editor as TiptapEditor, EditorProvider, ReactNodeViewRenderer } from '@tiptap/react'
+import { ReactNodeViewRenderer } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import MenuBar from './components/MenuBar'
-import { useStyles } from './style'
-import { createContext, useContext, useEffect, useRef } from 'react'
+import Link from '@tiptap/extension-link'
 import CustomTaskItem from './components/CustomNodes/CustomTaskItem'
 import CustomImage from './components/CustomNodes/CustomImage'
 import Shiki from './plugins/shiki'
+import File from './components/CustomNodes/File'
 
 const extensions = [
   Color.configure({ types: [TextStyle.name, ListItem.name] }),
@@ -76,6 +73,8 @@ const extensions = [
   TableHeader,
   TableCell,
   Shiki,
+  Link,
+  File,
 ]
 
 export default extensions

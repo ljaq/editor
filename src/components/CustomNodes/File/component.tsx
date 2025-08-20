@@ -6,20 +6,12 @@ import { useJQEditor } from '../../../Editor'
 import { useStyle } from './style'
 import otherIcon from './icons/OTHER.png'
 
-function Icon({ src }: { src: string }) {
-  const [imageSrc, setImageSrc] = useState(null)
-  useEffect(() => {
-    const suffix = src?.split('.').pop()?.toUpperCase()
-    import(`./icons/${suffix}.png`)
-      .then(module => {
-        setImageSrc(module.default)
-      })
-      .catch(() => {
-        setImageSrc(otherIcon)
-      })
-  }, [src])
+const icons = import.meta.glob('./icons/*.png', { eager: true, import: 'default' })
 
-  return imageSrc ? <img src={imageSrc} /> : <></>
+function Icon({ src }: { src: string }) {
+  const suffix = src?.split('.').pop()?.toUpperCase()
+  const imageSrc = icons[`./icons/${suffix}.png`] || otherIcon
+  return <img src={imageSrc as string} />
 }
 
 export default (props: NodeViewProps) => {
